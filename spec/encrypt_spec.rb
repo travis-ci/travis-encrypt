@@ -1,0 +1,21 @@
+describe Travis::Encrypt do
+  include described_class::Helpers
+
+  let(:string)    { 'travis' }
+  let(:encrypted) { encrypt(string, options) }
+  let(:decrypted) { decrypt(encrypted, options) }
+  let(:options)   { { key: 'abcd' * 8 } }
+
+  it 'can decrypt an encrypted string' do
+    expect(decrypted).to eql(string)
+  end
+
+  it 'prefixes the encrypted string by default' do
+    expect(encrypted[0..7]).to eql(Travis::Encrypt::PREFIX)
+  end
+
+  it 'does not prefix the encrypted string when opted out' do
+    options[:use_prefix] = false
+    expect(encrypted[0..7]).to_not eql(described_class::PREFIX)
+  end
+end
