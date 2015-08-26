@@ -6,16 +6,15 @@ module Travis
       module Sequel
         module ClassMethods
           def attr_encrypted(*names)
-            options = names.last.is_a?(Hash) ? names.last : {}
-            key = options[:key] || Encrypt.key
+            options = names.last.is_a?(Hash) ? names.pop : {}
             super
-            define_encrypted_values(names, key)
+            define_encrypted_values(names, options)
           end
 
-          def define_encrypted_values(names, key)
+          def define_encrypted_values(names, options)
             define_method(:values) do
               super().inject({}) do |values, (name, value)|
-                value = Encrypt.decrypt(value, key: key) if names.include?(name)
+                value = Encrypt.decrypt(value, options) if names.include?(name)
                 values.merge(name => value)
               end
             end

@@ -5,20 +5,22 @@ module Travis
         module ClassMethods
           def attr_encrypted(*names)
             options = names.last.is_a?(Hash) ? names.pop : {}
-            key = options[:key] || Encrypt.key
+            define_encrypted_accessors(names, options)
+          end
 
+          def define_encrypted_accessors(names, options)
             names.each do |name|
-              define_encrypted_accessor(name, key)
+              define_encrypted_accessor(name, options)
             end
           end
 
-          def define_encrypted_accessor(name, key)
+          def define_encrypted_accessor(name, options)
             define_method(name) do
-              Encrypt.decrypt(self[name], key: key)
+              Encrypt.decrypt(self[name], options)
             end
 
             define_method(:"#{name}=") do |string|
-              self[name] = Encrypt.encrypt(string, key: key)
+              self[name] = Encrypt.encrypt(string, options)
             end
           end
         end

@@ -16,11 +16,11 @@ module Travis
       end
 
       def encrypt(string, options)
-        Encryptor.new(string, options).apply
+        Encryptor.new(string, { key: key }.merge(options)).apply
       end
 
       def decrypt(string, options)
-        Decryptor.new(string, options).apply
+        Decryptor.new(string, { key: key }.merge(options)).apply
       end
     end
   end
