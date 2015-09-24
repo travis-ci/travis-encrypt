@@ -4,7 +4,6 @@ source 'https://rubygems.org'
 
 platform :jruby do
   gem 'jruby-openssl', '~> 0.9.8', require: false
-  gem 'unlimited-jce-policy-jdk7', github: 'travis-ci/unlimited-jce-policy-jdk7'
 end
 
 group :test do

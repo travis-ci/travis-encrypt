@@ -1,18 +1,8 @@
-require 'travis/encrypt/common'
+require 'travis/encrypt/base'
 
 module Travis
   module Encrypt
-    class Decryptor
-      include Common
-
-      attr_reader :string, :key, :options
-
-      def initialize(string, options)
-        @string  = string
-        @key     = options[:key] || fail("Need to pass a key")
-        @options = options || {}
-      end
-
+    class Decryptor < Base
       def apply?
         string && (!use_prefix? || prefix_used?)
       end

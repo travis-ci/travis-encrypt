@@ -1,6 +1,15 @@
 module Travis
   module Encrypt
-    module Common
+    class Base
+      attr_reader :string, :key, :options
+
+      def initialize(string, options)
+        @string  = string
+        @key     = options[:key]
+        @options = options
+        validate
+      end
+
       def create_aes(mode = :encrypt, key, iv)
         aes = OpenSSL::Cipher::AES.new(256, :CBC)
         aes.send(mode)
@@ -28,6 +37,13 @@ module Travis
       def decode(str)
         Base64.strict_decode64(str)
       end
+
+      private
+
+        def validate
+          key               || fail('No key given')
+          key.is_a?(String) || fail("Invalid key given: #{key.inspect}")
+        end
     end
   end
 end

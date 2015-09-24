@@ -1,18 +1,8 @@
-require 'travis/encrypt/common'
+require 'travis/encrypt/base'
 
 module Travis
   module Encrypt
-    class Encryptor
-      include Common
-
-      attr_reader :string, :key, :options
-
-      def initialize(string, options)
-        @string  = string
-        @key     = options[:key] || fail("Need to pass a key")
-        @options = options || {}
-      end
-
+    class Encryptor < Base
       def apply?
         !!string && !string.empty? && !options[:disable] # TODO ask piotr
       end
