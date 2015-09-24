@@ -1,5 +1,6 @@
-require 'securerandom'
 require 'base64'
+require 'securerandom'
+require 'openssl'
 require 'travis/encrypt/decryptor'
 require 'travis/encrypt/encryptor'
 require 'travis/encrypt/helpers'
