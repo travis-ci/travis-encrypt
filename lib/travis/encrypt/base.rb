@@ -11,6 +11,7 @@ module Travis
       end
 
       def create_aes(mode = :encrypt, key, iv)
+        key = key[0, 32] # https://github.com/ruby/ruby/commit/ce635262f53b760284d56bb1027baebaaec175d1
         aes = OpenSSL::Cipher::AES.new(256, :CBC)
         aes.send(mode)
         aes.key = key
