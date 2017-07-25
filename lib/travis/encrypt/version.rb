@@ -1,5 +1,5 @@
 module Travis
   module Encrypt
-    VERSION = '0.0.4'
+    VERSION = '2.0.2'
   end
 end
