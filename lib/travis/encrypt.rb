@@ -15,14 +15,16 @@ module Travis
       def setup(config)
         self.key = config[:key]
       end
-
-      def encrypt(string, options)
-        Encryptor.new(string, { key: key }.merge(options)).apply
-      end
-
-      def decrypt(string, options)
-        Decryptor.new(string, { key: key }.merge(options)).apply
-      end
     end
+
+    def encrypt(string, options)
+      Encryptor.new(string, { key: Encrypt.key }.merge(options)).apply
+    end
+
+    def decrypt(string, options)
+      Decryptor.new(string, { key: Encrypt.key }.merge(options)).apply
+    end
+
+    extend self
   end
 end
