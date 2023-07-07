@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Travis
   module Encrypt
     class Base
@@ -10,9 +12,9 @@ module Travis
         validate
       end
 
-      def create_aes(mode = :encrypt, key, iv)
+      def create_aes(mode = :encrypt, key, iv) # rubocop:disable Style/OptionalArguments
         key = key[0, 32] # https://github.com/ruby/ruby/commit/ce635262f53b760284d56bb1027baebaaec175d1
-        aes = OpenSSL::Cipher::AES.new(256, :CBC)
+        aes = OpenSSL::Cipher.new('aes-256-cbc')
         aes.send(mode)
         aes.key = key
         aes.iv  = iv
@@ -28,7 +30,7 @@ module Travis
       end
 
       def extract_iv(string)
-        [string[-16..-1], string[0..-17]]
+        [string[-16..], string[0..-17]]
       end
 
       def encode(str)
@@ -41,10 +43,10 @@ module Travis
 
       private
 
-        def validate
-          key               || fail('No key given')
-          key.is_a?(String) || fail("Invalid key given: #{key.inspect}")
-        end
+      def validate
+        key               || raise('No key given')
+        key.is_a?(String) || raise("Invalid key given: #{key.inspect}")
+      end
     end
   end
 end

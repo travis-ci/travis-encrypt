@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 describe Travis::Encrypt::Helpers do
   subject { const.new }
+
   before  { Travis::Encrypt.key = 'abcd' * 8 }
 
   shared_examples_for 'attributes' do
@@ -29,7 +32,7 @@ describe Travis::Encrypt::Helpers do
     let(:const) do
       Struct.new(:attr) do
         # Sequel's values method returns a hash of attributes
-        include Module.new { def values; to_h; end }
+        include(Module.new { def values = to_h })
         include Travis::Encrypt::Helpers::Sequel
         attr_encrypted :attr
       end
