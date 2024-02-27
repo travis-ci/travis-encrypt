@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'travis/encrypt/helpers/active_record'
 require 'travis/encrypt/helpers/sequel'
 
